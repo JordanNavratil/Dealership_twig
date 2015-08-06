@@ -4,38 +4,16 @@
 
     $app = new Silex\Application();
 
-    $app->get("/", function() {
-            return "Home";
-    });
+    $app->register(new Silex\Provider\TwigServiceProvider(), array(
+        'twig.path' => __DIR__.'/../views'
+    ));
 
-    /* CAR_FORM.HTML */
+    /* CAR_FORM.HTML - Home route */
 
-    $app->get("/new_car", function() {
-        return "
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title>Find a Car</title>
-                <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-            </head>
-            <body>
-                <div class='container'>
-                    <h1>Find a Car!</h1>
-                    <form action='/view_car'>
-                        <div class='form-group'>
-                            <label for='price'>Enter Maximum Price:</label>
-                            <input id='price' name='price' class='form-control' type='number'>
-                        </div>
-                        <div class='form-group'>
-                            <label for='miles'>Enter Maximum Mileage:</label>
-                            <input id='miles' name='miles' class='form-control' type='number'>
-                        </div>
-                        <button type='submit' class='btn-success'>Submit</button>
-                    </form>
-                </div>
-            </body>
-        </html>
-        ";
+    $app->get("/", function() use ($app) {
+
+        return $app['twig']->render('car_form.html.twig');
+
     });
 
     /* END CAR_FORM.HTML */
