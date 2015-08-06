@@ -58,5 +58,15 @@
             return $this->make_price < ($max_price + 100);
         }
 
+        function save()
+        {
+            array_push($_SESSION['list_of_cars'], $this);
+        }
+
+        static function getAll()
+        {
+            return $_SESSION['list_of_cars'];
+        }
+
     }
 ?>
