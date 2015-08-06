@@ -2,13 +2,18 @@
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/car.php";
 
+    session_start();
+        if (empty($_SESSION['list_of_cars'])) {
+            $_SESSION['list_of_cars'] = array($cars);
+        }
+
     $app = new Silex\Application();
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
 
-    /* CAR_FORM.HTML - Home route */
+    /* CAR_FORM.HTML.TWIG - Home route */
 
     $app->get("/", function() use ($app) {
 
@@ -16,9 +21,12 @@
 
     });
 
-    /* END CAR_FORM.HTML */
+    /* END CAR_FORM.HTML.TWIG */
 
-    $app->get("/view_car", function() {
+    /* START VIEW_CAR.HTML.TWIG */
+
+    $app->get("/view_car", function() use ($app) {
+
         $porsche = new Car("2014 Porsche 911", 114991, 7861, "images/porsche.jpg");
         $ford = new Car("2011 Ford F450", 55995, 14241, "images/ford.jpg");
         $lexus = new Car("2013 Lexus RX 350", 44700, 20000, "images/lexus.jpg");
@@ -32,44 +40,12 @@
                 array_push($cars_matching_search, $car);
             }
         }
-        $output = "";
 
-        $output = $output . "<!DOCTYPE html>
-            <html>
-            <head>
-                <title>Your Car Dealership's Homepage</title>
-                <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-            </head>
-            <body>
-                <div class='container'>
-                    <h1>Your Car Dealership</h1>
-                    ";
+        return $app['twig']->render('view_car.html.twig', array('cars' => $cars_matching_search));
 
-            if (empty($cars_matching_search)) {
-                $output = $output . "<p>Sorry, there are no cars available.</p>";
-            } else {
-                foreach ($cars_matching_search as $car) {
-                    $car_make = $car->getMake();
-                    $car_price = $car->getPrice();
-                    $car_miles = $car->getMiles();
-
-                    $output = $output . "<li><img class='img-rounded' src='$car->make_photo'></li>";
-                    $output = $output . "<li> $car_make </li>";
-                    $output = $output . "<ul>";
-                        $output = $output . "<li> $car_price </li>";
-                        $output = $output . "<li> Miles: $car_miles </li>";
-                    $output = $output ."</ul>";
-
-                }
-            }
-
-            $output = $output . "
-                     </div>
-                </body>
-                </html>
-            ";
-        return $output;
     });
+
+    /* END VIEW_CAR.HTML.TWIG */
 
     return $app;
 

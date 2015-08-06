@@ -4,7 +4,7 @@
         private $make_model;
         private $make_price;
         private $make_miles;
-        public $make_photo;
+        private $make_photo;
 
         function __construct($car_make, $car_price, $car_miles, $car_photo)
         {
@@ -43,10 +43,20 @@
             return $this->make_miles;
         }
 
+        function setPhoto()
+        {
+            $photo = (string) $new_photo;
+        }
+
+        function getPhoto()
+        {
+            return $this->make_photo;
+        }
+
         function worthBuying($max_price)
         {
             return $this->make_price < ($max_price + 100);
         }
-    }
 
+    }
 ?>

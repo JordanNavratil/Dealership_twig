@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Cars</title>
+    </head>
+    <body>
+
+    <h1>Jordans Car Dealership</h1>
+
+            {% if cars is not empty %}
+                <p> Here are all our cars:</p>
+                <ul>
+                    {% for car in cars %}
+                    <h2>{{ car.getMake }}</h2>
+                    <li>${{ car.getPrice }}</li>
+                    <li>{{ car.getMiles }} miles</li>
+                    <p><img src="{{ car.getPhoto }}"></p>
+                    <br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+    </body>
+</html>
