@@ -7,7 +7,7 @@
     <h1>Jordans Car Dealership</h1>
 
             {% if cars is not empty %}
-                <p> Here are all our cars:</p>
+                <p> Here are our cars matching your search:</p>
                 <ul>
                     {% for car in cars %}
                     <h2>{{ car.getMake }}</h2>
@@ -18,5 +18,11 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+
+            {% if cars is empty %}
+                <h2>No cars match your search!</h2>
+            {% endif %}
+
+            <p><a href="/">Back to search form.</a></p>
     </body>
 </html>

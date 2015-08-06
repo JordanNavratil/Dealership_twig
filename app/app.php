@@ -9,6 +9,7 @@
 
     $app = new Silex\Application();
 
+
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
@@ -46,6 +47,15 @@
     });
 
     /* END VIEW_CAR.HTML.TWIG */
+
+    /* BEGIN SELL_CAR.HTML.TWIG */
+
+    $app->get("/sell_car", function() use ($app) {
+
+        return $app['twig']->render('sell_car.html.twig');
+    });
+
+    /* END SELL_CAR.HTML.TWIG */
 
     return $app;
 
